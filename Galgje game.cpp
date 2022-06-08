@@ -131,10 +131,11 @@ string LoadRandomWord() {
     string returnValue = "";
 
     srand(time(NULL));
-    string words[20] = {"school","life","dragon","brain","brawn","experimental","lifeless","supercalifragilisticoespialidoso","mansion","Gladiator","Fantasy","Lion","Goblin","query","anime","omaewamoushindeiru","generations","minecraft","mages","robots"};
+    string words[20] = {"school","life","dragon","brain","brawn","experimental","lifeless","supercalifragilisticoespialidoso","mansion","gladiator","fantasy","lion","goblin","query","anime","omaewamoushindeiru","generations","minecraft","mages","robots"};
+    string *ptrwords = words;
 
-    returnValue = words[(rand() % 20)];
-
+    returnValue = ptrwords[(rand() % 20)];
+    
     return returnValue;
 
 }
@@ -150,23 +151,67 @@ int TriesLeft(string word, string guessed)
     }
     return error;
 }
+int keuzemenu(){
+    int keuze;
+    cout << "1 cpu or 2 player\n";
+    cin >> keuze;
+    return keuze;
+}
 
-int main() {
-  
+string zelfwoord() {
+    string word = "";
+    cout << "bedenk een woord\n";
+    cin >> word;
+    return word;
+}
+
+int playagain() {
+
+    int x;
+    cout << "nog een keer spelen.\n";
+    cout << "kies 1 voor nog een keer spelen of kies 2 om te stoppen\n";
+    cin >> x;
+
+        return x;
+}
+
+//void wincheck(string words = "fiets") {
+//    int a = 5;
+//     a = words.length();
+//    cout << "de lengte is: " << a;
+
+    // system("pause");
+   
+    /*char array[a];
+    strcpy(array, words.c_str());
+    char array2[a];
+    for (int x = 0; x < a; x++) {
+        array2[x] = '_';
+    }
+}*/
+
+
+
+
+int main() { 
+   /* wincheck();*/
     string guesses;
     string wordToGuess;
-    wordToGuess = LoadRandomWord();
+   int x = keuzemenu();
+   if (x == 1) wordToGuess = LoadRandomWord();
+   if (x == 2) wordToGuess = zelfwoord();
     int tries = 0;
     bool win = false;
     do
     {
-        system("cls"); //replace this line with system("clear"); if you run Linux or MacOS
+        system("cls");
         PrintMessage("HANGMAN");
         DrawHangman(tries);
         PrintAvailableLetters(guesses);
         PrintMessage("Guess the word");
         win = PrintWordAndCheckWin(wordToGuess, guesses);
 
+        
         
         if (win)
             break;
@@ -185,10 +230,16 @@ int main() {
         PrintMessage("YOU WON!");
     else
         PrintMessage("GAME OVER");
+    system("pause");
+
+    system("cls");
+
+    int y = playagain();
+    if (y == 1) main();
+    if (y == 2) exit(0);
 
     
-
-    system("pause"); //this line wont work on Linux or MacOS so remove it
     getchar();
+  
     return 0;
 }
